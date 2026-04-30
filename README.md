@@ -290,7 +290,7 @@ Request:
   "instrument": "BTC/BRL",
   "quantity": 1,
   "side": "sell",
-  "price": 500.000
+  "price": 500000
 }
 ```
 
@@ -312,7 +312,7 @@ Resposta de sucesso (`200 OK`):
   "instrument": "BTC/BRL",
   "quantity": 1,
   "remaining_quantity": 1,
-  "price": 500.000,
+  "price": 500000,
   "side": "sell",
   "status": "open"
 }
@@ -348,7 +348,7 @@ curl -X POST http://localhost:8080/api/v1/orders/4e4de77c-72f4-46de-bd6f-d743ad2
     "instrument": "BTC/BRL",
     "quantity": 1,
     "side": "sell",
-    "price": 500.000
+    "price": 500000
   }'
 ```
 
@@ -361,7 +361,7 @@ curl -X POST http://localhost:8080/api/v1/orders/d637dfc8-132d-451e-8485-6101186
     "instrument": "BTC/BRL",
     "quantity": 1,
     "side": "buy",
-    "price": 500.000
+    "price": 500000
   }'
 ```
 
@@ -385,7 +385,7 @@ Resposta de sucesso (`200 OK`):
       "instrument": "BTC/BRL",
       "quantity": 1,
       "remaining_quantity": 1,
-      "price": 500.000,
+      "price": 500000,
       "side": "buy",
       "status": "open"
     }
@@ -397,7 +397,7 @@ Resposta de sucesso (`200 OK`):
       "instrument": "BTC/BRL",
       "quantity": 1,
       "remaining_quantity": 1,
-      "price": 510.000,
+      "price": 510000,
       "side": "sell",
       "status": "open"
     }
@@ -438,7 +438,7 @@ Resposta de sucesso (`200 OK`):
   "instrument": "BTC/BRL",
   "quantity": 1,
   "remaining_quantity": 1,
-  "price": 500.000,
+  "price": 500000,
   "side": "sell",
   "status": "cancelled"
 }
@@ -469,14 +469,16 @@ O seed e idempotente para usuarios e carteiras: ao rodar novamente, ele atualiza
 
 | Usuario | ID | E-mail | Saldo inicial |
 | --- | --- | --- | --- |
-| Conta A Seed | `4e4de77c-72f4-46de-bd6f-d743ad24acfa` | `conta-a.seed@example.com` | `500.000 BRL` |
+| Conta A Seed | `4e4de77c-72f4-46de-bd6f-d743ad24acfa` | `conta-a.seed@example.com` | `500000 BRL` |
 | Conta B Seed | `d637dfc8-132d-451e-8485-610118670c53` | `conta-b.seed@example.com` | `1 BTC` |
 | Conta C Seed | `8a1b5c90-7d2e-4f31-9c84-2e60f7b4a901` | `conta-c.seed@example.com` | `1.000.000 BRL` |
 | Conta D Seed | `6f2c9a13-4b85-4d9e-9a77-1c4f0a6b8e52` | `conta-d.seed@example.com` | `1 BTC` |
 
-Esse seed respeita o cenario do teste: a Conta A tem BRL para comprar 1 BTC por 500.000 BRL, e a Conta B tem 1 BTC para vender pelo mesmo preco. As contas C e D permitem testar uma execucao parcial: C compra 2 BTC e D vende apenas 1 BTC, deixando a ordem de compra de C com status `partially_filled`. Se preferir, tambem e possivel chamar `POST /users` e `POST /wallets/:id` para criar usuarios e saldos proprios.
+Esse seed respeita o cenario do teste: a Conta A tem BRL para comprar 1 BTC por 500000 BRL, e a Conta B tem 1 BTC para vender pelo mesmo preco. As contas C e D permitem testar uma execucao parcial: C compra 2 BTC e D vende apenas 1 BTC, deixando a ordem de compra de C com status `partially_filled`. Se preferir, tambem e possivel chamar `POST /users` e `POST /wallets/:id` para criar usuarios e saldos proprios.
 
 ## Roteiro de teste manual com curl
+
+O projeto tambem possui o arquivo [`requests.http`](requests.http) com os mesmos cenarios abaixo prontos para executar em clientes compativeis, como a extensao REST Client do VS Code. Se preferir, use Postman, Insomnia, `curl` ou qualquer outra ferramenta HTTP.
 
 Os exemplos abaixo usam os usuarios do seed:
 
@@ -504,7 +506,7 @@ curl http://localhost:8080/api/v1/wallets/d637dfc8-132d-451e-8485-610118670c53
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/4e4de77c-72f4-46de-bd6f-d743ad24acfa \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":1,"side":"buy","price":500.000}'
+  -d '{"instrument":"BTC/BRL","quantity":1,"side":"buy","price":500000}'
 ```
 
 ### 4. Conta B cria uma ordem de venda
@@ -512,10 +514,10 @@ curl -X POST http://localhost:8080/api/v1/orders/4e4de77c-72f4-46de-bd6f-d743ad2
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/d637dfc8-132d-451e-8485-610118670c53 \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":500.000}'
+  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":500000}'
 ```
 
-Como os precos sao compativeis, a API executa o matching automaticamente: 1 BTC sai da Conta B para a Conta A, e 500.000 BRL saem da Conta A para a Conta B.
+Como os precos sao compativeis, a API executa o matching automaticamente: 1 BTC sai da Conta B para a Conta A, e 500000 BRL saem da Conta A para a Conta B.
 
 ### 5. Consultar order book
 
@@ -537,7 +539,7 @@ Conta C cria uma ordem de compra de 2 BTC:
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/8a1b5c90-7d2e-4f31-9c84-2e60f7b4a901 \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":2,"side":"buy","price":500.000}'
+  -d '{"instrument":"BTC/BRL","quantity":2,"side":"buy","price":500000}'
 ```
 
 Conta D cria uma ordem de venda de apenas 1 BTC:
@@ -545,7 +547,7 @@ Conta D cria uma ordem de venda de apenas 1 BTC:
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/6f2c9a13-4b85-4d9e-9a77-1c4f0a6b8e52 \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":500.000}'
+  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":500000}'
 ```
 
 Ao consultar o order book, a ordem de compra da Conta C deve aparecer com `status` igual a `partially_filled` e `remaining_quantity` igual a `1`.
@@ -584,7 +586,7 @@ Ou diretamente com Go:
 go test ./...
 ```
 
-O projeto tambem possui o arquivo [`requests.http`](requests.http) com exemplos prontos para clientes REST compativeis, como a extensao REST Client do VS Code e ferramentas similares.
+Use `requests.http`, `curl` ou a ferramenta HTTP de sua preferencia para executar os cenarios manuais.
 
 ## Estrutura resumida
 
