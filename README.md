@@ -66,6 +66,7 @@ Escolhi o `Tern` para migrations porque e uma ferramenta com a qual ja tenho fam
 - [Docker](https://docs.docker.com/get-docker/) e [Docker Compose](https://docs.docker.com/compose/)
 - `make`
 - [Tern](https://github.com/jackc/tern)
+- Extensao [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) na IDE para executar as requisicoes do arquivo [`requests.http`](requests.http)
 
 ### Variaveis de ambiente
 
