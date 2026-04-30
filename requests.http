@@ -1,0 +1,96 @@
+@baseUrl = http://localhost:8080/api/v1
+@userId = 4e4de77c-72f4-46de-bd6f-d743ad24acfa
+@otherUserId = d637dfc8-132d-451e-8485-610118670c53
+@partialBuyerId = 8a1b5c90-7d2e-4f31-9c84-2e60f7b4a901
+@partialSellerId = 6f2c9a13-4b85-4d9e-9a77-1c4f0a6b8e52
+@orderId = 3bdb0f35-cf1f-44ad-8e60-c7adf9d3ac62
+@instrument = BTC/BRL
+
+### Create Conta A
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Conta A",
+  "email": "conta-a@example.com"
+}
+
+### Create Conta B
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Conta B",
+  "email": "conta-b@example.com"
+}
+
+### Credit BRL to Conta A wallet
+POST {{baseUrl}}/wallets/{{userId}}
+Content-Type: application/json
+
+{
+  "instrument": "BRL",
+  "quantity": 500000
+}
+
+### Credit BTC to Conta B wallet
+POST {{baseUrl}}/wallets/{{otherUserId}}
+Content-Type: application/json
+
+{
+  "instrument": "BTC",
+  "quantity": 1
+}
+
+### Get wallet
+GET {{baseUrl}}/wallets/{{userId}}
+
+### Place buy order - Conta A
+POST {{baseUrl}}/orders/{{userId}}
+Content-Type: application/json
+
+{
+  "instrument": "BTC/BRL",
+  "quantity": 1,
+  "side": "buy",
+  "price": 500000
+}
+
+### Place sell order - Conta B
+POST {{baseUrl}}/orders/{{otherUserId}}
+Content-Type: application/json
+
+{
+  "instrument": "BTC/BRL",
+  "quantity": 1,
+  "side": "sell",
+  "price": 500000
+}
+
+### Get order book
+GET {{baseUrl}}/orderbook?instrument={{instrument}}
+
+### Place partial buy order - Conta C
+POST {{baseUrl}}/orders/{{partialBuyerId}}
+Content-Type: application/json
+
+{
+  "instrument": "BTC/BRL",
+  "quantity": 2,
+  "side": "buy",
+  "price": 500000
+}
+
+### Place partial sell order - Conta D
+POST {{baseUrl}}/orders/{{partialSellerId}}
+Content-Type: application/json
+
+{
+  "instrument": "BTC/BRL",
+  "quantity": 1,
+  "side": "sell",
+  "price": 500000
+}
+
+### Cancel order
+DELETE {{baseUrl}}/users/{{userId}}/orders/{{orderId}}
