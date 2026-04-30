@@ -40,6 +40,12 @@ O fluxo principal do projeto e:
 | PostgreSQL | Banco de dados relacional usado pela aplicacao. | [postgresql.org](https://www.postgresql.org/) |
 | Docker Compose | Orquestracao local do banco de dados. | [docs.docker.com/compose](https://docs.docker.com/compose/) |
 
+### Decisoes sobre SQLC e Tern
+
+Escolhi o `sqlc` porque ele gera arquivos Go tipados a partir das queries SQL. Isso permite escrever SQL explicito, manter seguranca de tipos no codigo Go e reduzir boilerplate na camada de acesso ao banco. Os arquivos gerados ficam em `internal/store/pg`.
+
+Escolhi o `Tern` para migrations porque e uma ferramenta com a qual ja tenho familiaridade, alem de ser simples para versionar e aplicar alteracoes incrementais no schema PostgreSQL.
+
 ## Regras principais do dominio
 
 - Instrumentos de carteira aceitos: `BTC`, `BRL`, `USDT` e `ETH`.
@@ -59,7 +65,6 @@ O fluxo principal do projeto e:
 - [Go](https://go.dev/) `1.25.1+`
 - [Docker](https://docs.docker.com/get-docker/) e [Docker Compose](https://docs.docker.com/compose/)
 - `make`
-- [sqlc](https://sqlc.dev/)
 - [Tern](https://github.com/jackc/tern)
 
 ### Variaveis de ambiente
@@ -102,12 +107,6 @@ Insira os dados iniciais para testes manuais:
 make seed
 ```
 
-Gere o codigo de acesso ao banco com SQLC:
-
-```bash
-make sqlc
-```
-
 Execute os testes:
 
 ```bash
@@ -131,7 +130,7 @@ http://localhost:8080/api/v1
 | Comando | Descricao |
 | --- | --- |
 | `make deps` | Atualiza dependencias com `go mod tidy`. |
-| `make sqlc` | Gera codigo Go a partir das queries SQL configuradas em `sqlc.yml`. |
+| `make sqlc` | Opcional para desenvolvimento: regenera codigo Go a partir das queries SQL configuradas em `sqlc.yml`. |
 | `make test` | Executa todos os testes com `go test ./...`. |
 | `make build` | Compila o binario em `bin/go-order-book`. |
 | `make run` | Inicia a aplicacao localmente em `:8080`. |
