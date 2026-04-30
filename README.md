@@ -290,7 +290,7 @@ Request:
   "instrument": "BTC/BRL",
   "quantity": 1,
   "side": "sell",
-  "price": 500000
+  "price": 500.000
 }
 ```
 
@@ -312,7 +312,7 @@ Resposta de sucesso (`200 OK`):
   "instrument": "BTC/BRL",
   "quantity": 1,
   "remaining_quantity": 1,
-  "price": 500000,
+  "price": 500.000,
   "side": "sell",
   "status": "open"
 }
@@ -348,7 +348,7 @@ curl -X POST http://localhost:8080/api/v1/orders/4e4de77c-72f4-46de-bd6f-d743ad2
     "instrument": "BTC/BRL",
     "quantity": 1,
     "side": "sell",
-    "price": 500000
+    "price": 500.000
   }'
 ```
 
@@ -361,7 +361,7 @@ curl -X POST http://localhost:8080/api/v1/orders/d637dfc8-132d-451e-8485-6101186
     "instrument": "BTC/BRL",
     "quantity": 1,
     "side": "buy",
-    "price": 500000
+    "price": 500.000
   }'
 ```
 
@@ -385,7 +385,7 @@ Resposta de sucesso (`200 OK`):
       "instrument": "BTC/BRL",
       "quantity": 1,
       "remaining_quantity": 1,
-      "price": 500000,
+      "price": 500.000,
       "side": "buy",
       "status": "open"
     }
@@ -397,7 +397,7 @@ Resposta de sucesso (`200 OK`):
       "instrument": "BTC/BRL",
       "quantity": 1,
       "remaining_quantity": 1,
-      "price": 510000,
+      "price": 510.000,
       "side": "sell",
       "status": "open"
     }
@@ -438,7 +438,7 @@ Resposta de sucesso (`200 OK`):
   "instrument": "BTC/BRL",
   "quantity": 1,
   "remaining_quantity": 1,
-  "price": 500000,
+  "price": 500.000,
   "side": "sell",
   "status": "cancelled"
 }
@@ -504,7 +504,7 @@ curl http://localhost:8080/api/v1/wallets/d637dfc8-132d-451e-8485-610118670c53
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/4e4de77c-72f4-46de-bd6f-d743ad24acfa \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":1,"side":"buy","price":500000}'
+  -d '{"instrument":"BTC/BRL","quantity":1,"side":"buy","price":500.000}'
 ```
 
 ### 4. Conta B cria uma ordem de venda
@@ -512,7 +512,7 @@ curl -X POST http://localhost:8080/api/v1/orders/4e4de77c-72f4-46de-bd6f-d743ad2
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/d637dfc8-132d-451e-8485-610118670c53 \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":500000}'
+  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":500.000}'
 ```
 
 Como os precos sao compativeis, a API executa o matching automaticamente: 1 BTC sai da Conta B para a Conta A, e 500.000 BRL saem da Conta A para a Conta B.
@@ -537,7 +537,7 @@ Conta C cria uma ordem de compra de 2 BTC:
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/8a1b5c90-7d2e-4f31-9c84-2e60f7b4a901 \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":2,"side":"buy","price":500000}'
+  -d '{"instrument":"BTC/BRL","quantity":2,"side":"buy","price":500.000}'
 ```
 
 Conta D cria uma ordem de venda de apenas 1 BTC:
@@ -545,7 +545,7 @@ Conta D cria uma ordem de venda de apenas 1 BTC:
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/6f2c9a13-4b85-4d9e-9a77-1c4f0a6b8e52 \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":500000}'
+  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":500.000}'
 ```
 
 Ao consultar o order book, a ordem de compra da Conta C deve aparecer com `status` igual a `partially_filled` e `remaining_quantity` igual a `1`.
@@ -561,7 +561,7 @@ Para testar cancelamento, crie uma ordem sem contraparte compativel e guarde o `
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/4e4de77c-72f4-46de-bd6f-d743ad24acfa \
   -H "Content-Type: application/json" \
-  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":700000}'
+  -d '{"instrument":"BTC/BRL","quantity":1,"side":"sell","price":700.000}'
 ```
 
 Depois substitua `ORDER_ID` pelo ID retornado:

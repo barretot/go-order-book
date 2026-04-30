@@ -46,7 +46,7 @@ migrate:
 	go run ./cmd/terndotenv
 
 seed:
-	docker compose exec -T db sh -c 'psql -U "$$DATABASE_USER" -d "$$DATABASE_NAME"' < scripts/seed.sql
+	docker compose exec -T db sh -c 'psql -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"' < scripts/seed.sql
 
 clean:
 	rm -rf $(BUILD_DIR)
