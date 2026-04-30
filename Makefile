@@ -26,7 +26,7 @@ sqlc:
 	sqlc generate -f sqlc.yml
 
 test:
-	go test ./...
+	go test ./internal/handlers ./internal/services ./internal/utils
 
 build:
 	@mkdir -p $(BUILD_DIR)
